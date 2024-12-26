@@ -1,0 +1,39 @@
+import threading
+import time
+import random
+import os
+import mcpi.minecraft as minecraft
+
+def clear_screen():
+    os.system('cls' if os.name == 'nt' else 'clear')
+
+def spoof_console():
+    while True:
+        clear_screen()
+        print("Server is running...")
+        print("Players online: " + str(random.randint(10, 50)))
+        print("TPS: " + str(round(random.uniform(10, 20), 2)))
+        print("Latency: " + str(round(random.uniform(10, 50), 2)) + "ms")
+        time.sleep(1)
+
+def exploit_minecraft_server(server_ip, port):
+    try:
+        mc = minecraft.Minecraft.create(server_ip, port)
+        mc.postToChat("Exploiting server...")
+        # Perform server exploitation here
+        time.sleep(1)
+        print("[*] Exploitation completed.")
+    except Exception as e:
+        print("Error connecting to server:", e)
+
+def main():
+    server_ip = "spymc.xyz"
+    port = 25565
+
+    spoof_thread = threading.Thread(target=spoof_console)
+    spoof_thread.start()
+
+    exploit_minecraft_server(server_ip, port)
+
+if __name__ == '__main__':
+    main()
