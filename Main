@@ -1,0 +1,26 @@
+import random
+import string
+import requests
+
+def generate_nitro():
+    letters = string.ascii_letters + string.digits
+    nitro = ''.join(random.choice(letters) for _ in range(16))
+    return nitro
+
+def check_validity(nitro):
+    url = 'https://discordapp.com/api/v6/entitlements/gift-codes/' + nitro + '?with_application=false&with_subscription_plan=true'
+    response = requests.get(url)
+    if response.status_code == 200:
+        return True
+    else:
+        return False
+
+def generate_valid_nitro():
+    while True:
+        nitro = generate_nitro()
+        if check_validity(nitro):
+            return nitro
+
+# Example usage
+valid_nitro = generate_valid_nitro()
+print('Valid nitro code:', valid_nitro)
